@@ -15,7 +15,7 @@ steps:
         from_secret: DOCKER_PUBLIC_USER
     commands:
       - export DOCKER_HOST=unix://var/run/host.sock
-      - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD harbor.dsrd.libraries.psu.edu
+      - docker login -u "$DOCKER_USER" -p $DOCKER_PASSWORD harbor.dsrd.libraries.psu.edu
       - docker build -t harbor.dsrd.libraries.psu.edu/public/chef-lint:$DRONE_BUILD_NUMBER .
       - docker tag harbor.dsrd.libraries.psu.edu/public/chef-lint:$DRONE_BUILD_NUMBER harbor.dsrd.libraries.psu.edu/public/chef-lint:latest
       - docker push harbor.dsrd.libraries.psu.edu/public/chef-lint
@@ -29,6 +29,6 @@ volumes:
       path: /var/run/docker.sock
 ---
 kind: signature
-hmac: 174714ba850ffe4c6cfee49c3c684eec35b7de7fa76c1c3c390146b5b21d17a0
+hmac: a758ab961099dcd16aa549d8f9f542315e6d55e516253bbd5469a3f42e71e63a
 
 ...
