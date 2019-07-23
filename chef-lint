@@ -23,7 +23,6 @@ changes.each do |change|
   end
 end
 
-
 changed_cookbooks.each do |cookbook|
   puts "\e[33mRunning cookstyle on cookbook #{cookbook}\e[0m"
   system("cookstyle cookbooks/#{cookbook}") ||
