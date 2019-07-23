@@ -23,11 +23,12 @@ changes.each do |change|
   end
 end
 
+
 changed_cookbooks.each do |cookbook|
   puts "\e[33mRunning cookstyle on cookbook #{cookbook}\e[0m"
   system("cookstyle cookbooks/#{cookbook}") ||
     raise("Cookstyle failed to lint #{cookbook} cookbook")
   puts "\e[33mRunning foodcritic on cookbook #{cookbook}\e[0m"
-  system("foodcritic cookbooks/#{cookbook}") ||
+  system("foodcritic cookbooks/#{cookbook} --tags '~FC001' --tags '~FC007'") ||
     raise("Foodcritic failed to lint #{cookbook} cookbook")
 end
