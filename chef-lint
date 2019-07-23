@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+def usage
+  puts "Usage: #{__FILE__} <dest> <source>"
+  exit
+end
+
+usage if ARGV.length < 2
+
+source = ARGV[1]
+dest = ARGV[0]
+
+changes = `git --no-pager diff --name-only #{dest}...#{source}`.split
+
+changed_cookbooks = []
+
+changes.each do |change|
+  next unless change.start_with?('cookbooks/')
+
+  cookbook_name = change.split('/')[1]
+  unless changed_cookbooks.include?(cookbook_name)
+    changed_cookbooks.push(cookbook_name)
+  end
+end
+
+changed_cookbooks.each do |cookbook|
+  puts "\e[33mRunning cookstyle on cookbook #{cookbook}\e[0m"
+  system("cookstyle cookbooks/#{cookbook}") ||
+    raise("Cookstyle failed to lint #{cookbook} cookbook")
+  puts "\e[33mRunning foodcritic on cookbook #{cookbook}\e[0m"
+  system("foodcritic cookbooks/#{cookbook}") ||
+    raise("Foodcritic failed to lint #{cookbook} cookbook")
+end
