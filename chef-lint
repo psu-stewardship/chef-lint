@@ -24,7 +24,7 @@ changes.each do |change|
 end
 
 changed_cookbooks.each do |cookbook|
-  next unless File.directory?(cookbook)
+  next unless File.directory?("cookbooks/#{cookbook}")
 
   puts "\e[33mRunning cookstyle on cookbook #{cookbook}\e[0m"
   system("cookstyle cookbooks/#{cookbook}") ||
