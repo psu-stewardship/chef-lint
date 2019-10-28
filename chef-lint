@@ -24,6 +24,8 @@ changes.each do |change|
 end
 
 changed_cookbooks.each do |cookbook|
+  next unless File.directory?(cookbook)
+
   puts "\e[33mRunning cookstyle on cookbook #{cookbook}\e[0m"
   system("cookstyle cookbooks/#{cookbook}") ||
     raise("Cookstyle failed to lint #{cookbook} cookbook")
